@@ -18,3 +18,15 @@ end
         Bring up your virtual machine
 
         vagrant up
+
+# VAGRANT VM PROVISIONING 
+
+- for provisioning/bootstraping changes to be made in vagrant config file : uncomment 
+        
+        config.vm.provision "shell", inline: <<-SHELL
+        apt-get update
+        apt-get install -y apache2
+        SHEL
+
+- do vagrant reload
+- You can not provision an existing vm but --provision can be used for force provisioning
