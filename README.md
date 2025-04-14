@@ -30,3 +30,22 @@ end
 
 - do vagrant reload
 - You can not provision an existing vm but --provision can be used for force provisioning
+
+
+# GIT & GITHUB
+
+> This is the standard and safe way to combine branches.
+
+    Steps:
+
+    ### Switch to main branch
+    git checkout main
+
+    ### Update main to latest
+    git pull origin main
+
+    ### Merge feature branch into main
+    git merge feature-branch
+
+    ### Push merged changes to GitHub
+    git push origin main
