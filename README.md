@@ -49,3 +49,16 @@ end
 
     ### Push merged changes to GitHub
     git push origin main
+
+# SYSTEM & TOMCAT : SERVICE MANAGEMENT
+- install httpd on centos
+- check the configuration using cat inside /usr/lib/systemd/system/httpd.servic
+- There u will see three definitions --> Unit , Service, Install  --> ExecStart=/usr/sbin/httpd $OPTIONS -DFOREGROUND in Service is used for https status
+- Now the package manager here dnf. APACHE TOMCAT can not be installed using thaT. Soooo...
+- download using tar link from apache using wget and extract it
+- java using dnf install java-17-openjdk -y
+- Now inside the apache_folder/bin/ extarct there is startup.sh ---> script written to start tomcat
+- To start tomcat do --> go inside apach --> do bin/startup.sh --> msg : tomcat staeted
+- ps -ef |grep tomcat --> will get the tomacat processes
+- Now we can use show ip addr to check in the browser 
+- This is running because we used startup.sh, But we cannot use startup.sh Since we want tomcat to get enabled at boottime : If the OS  reboots tomcat will not start automatically so we need a scritpt for that
