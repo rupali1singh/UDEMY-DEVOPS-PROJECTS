@@ -95,6 +95,7 @@ end
         After=network.target
 
         [Service]
+        Type=forking --> process that starts child processes
         User=tomcat
         WorkingDirectory=/opt/tomcat
         Environment=JAVA_HOME=/usr/lib/jvm/jre
@@ -127,6 +128,11 @@ end
 ###### ExecStop: The script used to stop Tomcat.
 
 ###### WantedBy=multi-user.target: Tells systemd to start this service at boot time, during the multi-user stage (standard for servers and network services). Non Gui mod of operating system (Complete OS STARTUP - GUI)
+
+- Save the file 
+- Use  systemctl daemon-reload whenever systemd file is changed
+- systemclt start tomcat
+- systemctl enable tomcat
 
 
                                                                                                                       
