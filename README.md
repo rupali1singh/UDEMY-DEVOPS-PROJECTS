@@ -134,5 +134,20 @@ end
 - systemclt start tomcat
 - systemctl enable tomcat
 
-
-                                                                                                                      
+# CODE BUILD AND DEPLOY
+- Tomcat does not understand ur code so 
+- we create a package
+- that package is where we put the code 
+- now this package is what out tomcat can read
+- to perform the above task we use maven
+- install all dependancy
+- clone source code
+##### There u will see application.properties
+- file which our project will use to connect to backend services
+- in this file changed the password to 123
+-       /usr/local/maven3.9/bin/mvn install-> to take the source code 
+-        and build it into the package using mvn
+-       do ls u will target -> ls -> artefact(vprofile-v2.war) -> war is archive injava
+-       ls /usr/local/tomcat/webapps/
+##### In thAT US Will see ROOT remove that and copy ur artefact file
+                                                                                                                
