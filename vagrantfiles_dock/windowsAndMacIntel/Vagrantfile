@@ -1,4 +1,4 @@
-# -*- mode: ruby -*-
+# -- mode: ruby --
 # vi: set ft=ruby :
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
@@ -12,8 +12,11 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "eurolinux-vagrant/centos-stream-9"
-
+  config.vm.box = "ubuntu/focal64"
+  Vagrant.configure("2") do |config|
+  config.vm.boot_timeout = 600  # Timeout in seconds (10 minutes in this example)
+  end
+ 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -32,12 +35,12 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-    config.vm.network "private_network", ip: "192.168.56.28"
+   config.vm.network "private_network", ip: "192.168.56.82"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-    config.vm.network "public_network"
+   config.vm.network "public_network"
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -45,24 +48,17 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
-  # Disable the default share of the current code directory. Doing this
-  # provides improved isolation between the vagrant box and your host
-  # by making sure your Vagrantfile isn't accessible to the vagrant box.
-  # If you use this you may want to enable additional shared subfolders as
-  # shown above.
-  # config.vm.synced_folder ".", "/vagrant", disabled: true
-
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-    config.vm.provider "virtualbox" do |vb|
+   config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-      vb.memory = "1024"
-    end
+     vb.memory = "2068"
+   end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
@@ -70,17 +66,21 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-    config.vm.provision "shell", inline: <<-SHELL
-      yum install httpd wget unzip vim -y
-      systemctl start httpd
-      systemctl enable httpd
-      mkdir -p /tmp/gotto #-p so it does not fail is the folder already exists
-      cd /tmp/gotto
-      wget https://www.tooplate.com/zip-templates/2110_character.zip
-      unzip -o 2110_character.zip
-      cp -r 2110_character/.* /var/www/html/
-      systemctl restart httpd
-      cd /tmp/
-      rm -rf /tmp/gotto
-    SHELL
+   config.vm.provision "shell", inline: <<-SHELL
+   sudo apt-get update
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg -y
+
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+   SHELL
 end
