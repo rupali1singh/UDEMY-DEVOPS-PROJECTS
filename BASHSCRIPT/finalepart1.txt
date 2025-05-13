@@ -1,0 +1,4 @@
+vim remotehosts - > m1,m2
+
+for host in `cat remotehosts` ; do echo $host; done --> for loop to see hosts
+for host in `cat remotehosts` ; do ssh devops@host uptime; done -> for uptime
