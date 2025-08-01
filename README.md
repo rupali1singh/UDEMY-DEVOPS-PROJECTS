@@ -150,4 +150,25 @@ end
 -       do ls u will target -> ls -> artefact(vprofile-v2.war) -> war is archive injava
 -       ls /usr/local/tomcat/webapps/
 ##### In thAT US Will see ROOT remove that and copy ur artefact file
-                                                                                                                
+
+## BASH SCRIPTING : REMOTE COMMAND EXECUTION ##
+- Executing commands on a machine from another machine :
+        login to machine 1
+        add machine 2 in /etc/hosts
+        ping machine 2
+        do ssh vagrant@machine2 inside m1 sudo
+        now to use another user istead of vagrant u can add one user 
+        m1->m2->sudo->useradd devops->passwd devops->add devops to sudos file->visudo -> devops ALL= (ALL) NOPASSWD=ALL
+        now u can use ssh devops@web01 --> also run command without login inside web01 as ssh devops@web01 uptime
+        everytime we do this it asks for passwd to avoid that we use key exchange :
+ #### Key exchange :####
+        ssh-keygen
+        press enter until u get the key
+        your identification.... is the private key --> key 
+        your public key... is the public key --> lock 
+        add key to the m2 machine and use key to use commands to use withou pass
+- ssh-copy-id devops@m1
+        this commnad will apply the lock to the vm m1now u can test ssh devops@web01 uptime
+
+                                                                                                    
+
